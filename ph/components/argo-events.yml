@@ -7,9 +7,9 @@ spec:
   project: cluster-tools
 
   source:
-    repoURL: https://github.com/letthefireflieslive/k8s-ph.git
+    repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
     targetRevision: HEAD
-    path: ./manifest/argo-events
+    path: ./ph/components/argo-events
 
   destination:
     server: https://kubernetes.default.svc

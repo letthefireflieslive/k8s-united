@@ -10,11 +10,13 @@ This is meant to be managed by DevOps team.
 
 # Install ArgoCD & Sealed Secret
 ```
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.3/manifests/install.yaml
+kubectl create namespace argo-cd
+kubectl apply -n argo-cd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.3/manifests/install.yaml
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.17.5/controller.yaml
 kubectl wait pods --for=condition=Ready --all-namespaces --all
 ```
+we need this initially but after this, argo-cd managed itself and sealed-secret as well.
+
 
 # Expose & Access ArgoCD
 `while true; do kubectl -n argocd port-forward svc/argocd-server 8081:80; done`

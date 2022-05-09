@@ -9,9 +9,9 @@ spec:
   project: cluster-tools
 
   source:
-    repoURL: https://github.com/letthefireflieslive/k8s-ph.git
+    repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
     targetRevision: HEAD
-    path: ./manifest/app-access-test
+    path: ./components/test-app
 
   destination:
     server: https://kubernetes.default.svc

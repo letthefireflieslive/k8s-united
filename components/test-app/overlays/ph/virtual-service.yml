@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: smoke
+  namespace: smoke
+spec:
+  gateways:
+    - istio-system/cluster-ingressgateway
+  hosts:
+    - devops.wfgmb.com
+  http:
+    - match:
+        - uri:
+            prefix: /smoke
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: smoke
+            port:
+              number: 80

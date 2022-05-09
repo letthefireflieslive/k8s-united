@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smoke
+spec:
+  selector:
+    matchLabels:
+      run: smoke
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: smoke
+    spec:
+      containers:
+        - name: smoke
+          image: nginx
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smoke
+  labels:
+    run: smoke
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    run: smoke
