@@ -52,7 +52,7 @@ argocd app create cluster-infra-root -f ph/root.yml
 ```
 
 # Expose and Access Argo Workflow
-`while true; do kubectl -n argoworkflow port-forward deployment/argo-server 8082:2746; done`
+`while true; do kubectl -n argo port-forward deployment/argo-server 8082:2746; done`
 
 Access at
 `https://localhost:8082`
