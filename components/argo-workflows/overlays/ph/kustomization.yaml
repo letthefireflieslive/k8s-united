@@ -4,4 +4,4 @@ resources:
 - ../../base
 - ../workflows
 - regcred.yaml
-- ingress.yaml
+- https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git.yaml
