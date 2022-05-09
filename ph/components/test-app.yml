@@ -6,12 +6,11 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: cluster-tools
-
+  project: cluster-infra
   source:
     repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
     targetRevision: HEAD
-    path: ./components/test-app
+    path: ./components/test-app/overlays/ph
 
   destination:
     server: https://kubernetes.default.svc

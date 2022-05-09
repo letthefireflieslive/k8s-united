@@ -11,7 +11,7 @@ This is meant to be managed by DevOps team.
 # Install ArgoCD & Sealed Secret
 ```
 kubectl create namespace argo-cd
-kubectl apply -n argo-cd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.3/manifests/install.yaml
+kubectl apply -n argo-cd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.17.5/controller.yaml
 kubectl wait pods --for=condition=Ready --all-namespaces --all
 ```
@@ -19,27 +19,17 @@ we need this initially but after this, argo-cd managed itself and sealed-secret 
 
 
 # Expose & Access ArgoCD
-`while true; do kubectl -n argocd port-forward svc/argocd-server 8081:80; done`
+`while true; do kubectl -n argo-cd port-forward svc/argocd-server 8081:80; done`
 
 Access
 `localhost:8081` at the browser
 
 # Get argo admin password
-`export ARGOCDPW=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)`
+`export ARGOCDPW=$(kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)`
 
 # Login to Argo
 `argocd login --insecure --username admin --password $ARGOCDPW localhost:8081`
 
-# Update IP address
-`export IP=[YOURIP]`
-```
-sed -i -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$IP/g" manifest/app-access-test/install.yml
-sed -i -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$IP/g" manifest/argo-events/example1.yml
-sed -i -e "s/[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}/$IP/g" manifest/argo-events/example2.yml
-git add .
-git commit -m "Update IPs"
-git push
-```
 
 ## Create sealed secrets
 ```
@@ -57,8 +47,8 @@ git push
 
 # Create all VCS resources
 ```
-argocd proj create cluster-tools -f argo/project.yml
-argocd app create cluster-root -f argo/root.yml
+argocd proj create cluster-infra -f ph/project.yml
+argocd app create cluster-infra-root -f ph/root.yml
 ```
 
 # Expose and Access Argo Workflow

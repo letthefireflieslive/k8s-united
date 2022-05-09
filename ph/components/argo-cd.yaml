@@ -2,14 +2,14 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argo-cd
-  namespace: argocd
+  namespace: argo-cd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: production
+  project: cluster-infra
   source:
-    path: argo-cd/overlays/production
-    repoURL: https://github.com/vfarcic/argo-combined-demo
+    path: ./components/argo-cd/overlays/ph
+    repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc

@@ -1,23 +1,22 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: argo-events
-  namespace: argo-cd
-spec:
-  project: cluster-tools
-
-  source:
-    repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
-    targetRevision: HEAD
-    path: ./ph/components/argo-events
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argo-events
-
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: argo-events
+#  namespace: argo-cd
+#spec:
+#  project: cluster-infra
+#  source:
+#    repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
+#    targetRevision: HEAD
+#    path: ./components/argo-events/overlays/ph
+#
+#  destination:
+#    server: https://kubernetes.default.svc
+#    namespace: argo-events
+#
+#  syncPolicy:
+#    syncOptions:
+#      - CreateNamespace=true
+#    automated:
+#      prune: true
+#      selfHeal: true
