@@ -38,8 +38,8 @@ export DOCKER_PASSWORD=[CHANGEME]
 export GITHUB_PERSONAL_ACCESS_TOKEN=[CHANGEME]
 ```
 ```
-kubectl -n argo-workflows create secret docker-registry regcred --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-server="https://index.docker.io/v1/" --dry-run=client -o yaml | kubeseal -o yaml > ./components/argo-workflows/overlays/ph/regcred.yaml
-kubectl -n argo-events create secret generic github-access --from-literal=token=$GITHUB_PERSONAL_ACCESS_TOKEN --dry-run=client -o yaml | kubeseal -o yaml > ./components/argo-events/overlays/ph/githubcred.yaml
+kubectl -n argo create secret docker-registry regcred --docker-username=$DOCKER_USERNAME --docker-password=$DOCKER_PASSWORD --docker-server="https://index.docker.io/v1/" --dry-run=client -o yaml | kubeseal -o yaml > ./components/argo-workflows/overlays/ph/regcred.yaml
+kubectl -n workflows create secret generic github-access --from-literal=token=$GITHUB_PERSONAL_ACCESS_TOKEN --dry-run=client -o yaml | kubeseal -o yaml > ./components/argo-workflows/overlays/workflows/githubcred.yaml
 git add . 
 git commit -m "Add container registry and github PAT creds"
 git push
