@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: cluster-infra
-  namespace: argo-cd
+  namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -11,7 +11,7 @@ spec:
     - '*'
   destinations:
   - server: https://kubernetes.default.svc
-    namespace: argo-cd
+    namespace: argocd
   - server: https://kubernetes.default.svc
     namespace: kube-system
   - server: https://kubernetes.default.svc

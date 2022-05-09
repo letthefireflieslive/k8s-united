@@ -2,7 +2,7 @@
 #kind: Application
 #metadata:
 #  name: argo-events
-#  namespace: argo-cd
+#  namespace: argocd
 #spec:
 #  project: cluster-infra
 #  source:

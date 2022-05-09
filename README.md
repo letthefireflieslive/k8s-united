@@ -10,8 +10,8 @@ This is meant to be managed by DevOps team.
 
 # Install ArgoCD & Sealed Secret
 ```
-kubectl create namespace argo-cd
-kubectl apply -n argo-cd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl apply -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.17.5/controller.yaml
 kubectl wait pods --for=condition=Ready --all-namespaces --all
 ```

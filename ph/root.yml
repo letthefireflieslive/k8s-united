@@ -5,7 +5,7 @@ metadata:
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: argo-cd
+    namespace: argocd
   project: cluster-infra
   source:
     repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
