@@ -6,6 +6,4 @@ resources:
 - github.com/argoproj/argo-workflows/manifests/cluster-install/workflow-controller-rbac
 - github.com/argoproj/argo-workflows/manifests/cluster-install/argo-server-rbac
 - templates.yaml
-patchesStrategicMerge:
-- config.yaml
 namespace: argo
