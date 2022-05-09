@@ -3,7 +3,7 @@ kind: SealedSecret
 metadata:
   creationTimestamp: null
   name: regcred
-  namespace: argo-workflows
+  namespace: argo
 spec:
   encryptedData:
     .dockerconfigjson: AgBmDUshp9031ibr3Y6n0JqGzW6Y8BhLWTAjIM88rwX5yn6xTbUp8UIxtuRLlha7Y9eOAGMOJ5o/W8RExnMueqGX+Sj2MLdt/1dZZ0lvdPnnRa7w1HR15/n1vDPazEpRZSLiXfu+fw7KClgEmcctxncXm8cXIzj1Y4uwV1MlDCCo8lzs/WPqjbx6DxM969GLVnPLpE8gtioH+gBdPyVuNnonvcF43x8Z9Pwm5gEnHF4QpydQNcySiXrWKaVQAnWGePp6lNFrJmLWCMRbg+8vOlM94QfFGS3Sz9tYekwU2TQVLpcXxGHM50c0K5bOT441kSQwMFLRg0bmCYkM+JwWKHSIr7LVf3k3GIy+aYl1luYCZ+U6DtUA5Q1y0C+uZWIYDBe78zpdOYpXJiv8yoKXEM/aix+qiXgrtkR9+U5PJ6E85Lny6zR5hCMSZBR6SoB8fhIR6thiLak8BpiMP267Bjh59ifoKSSM+bufBd7Ln/bsloKqD1DqMDACe+C1YvjHtxTz3fYzEqLbn+f8VZgQyBR/gx3/n5WGuKVh9kODOC2nNasGTEwU+mKbt39NTJpn54FjtVuujE9y/OURenutsPmxypWtDLKjcaNl36xJgGkv4RkKmvFCJu3pE1NhaHRI0fwFmvRLG/e2ZC66mpI/2FeH9MxXBm4RJDRBs0p8ct/Lt2cZ5UpiuGAREW4Htj1kVkhX8o3fLn1Jff1DRmrpu4FWJzDUtov6uZKbgxfaJSOx5n9xuzEoE8eCzamm7xLpfT3LZpQnUg7duOuZCW7yetWRAulMMT+P4MwvyK3MpHWFkSIn5CTpSoCxhuCn+cpZMAaogS6eMrO+fY3ahM2FZD2NACnirP5qAU9KnjiVStIG
@@ -12,6 +12,6 @@ spec:
     metadata:
       creationTimestamp: null
       name: regcred
-      namespace: argo-workflows
+      namespace: argo
     type: kubernetes.io/dockerconfigjson
 

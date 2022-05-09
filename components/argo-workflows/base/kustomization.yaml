@@ -8,4 +8,4 @@ resources:
 - templates.yaml
 patchesStrategicMerge:
 - config.yaml
-namespace: argo-workflows
+namespace: argo
