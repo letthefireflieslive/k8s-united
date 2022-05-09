@@ -19,13 +19,13 @@ we need this initially but after this, argo-cd managed itself and sealed-secret 
 
 
 # Expose & Access ArgoCD
-`while true; do kubectl -n argo-cd port-forward svc/argocd-server 8081:80; done`
+`while true; do kubectl -n argocd port-forward svc/argocd-server 8081:80; done`
 
 Access
 `localhost:8081` at the browser
 
 # Get argo admin password
-`export ARGOCDPW=$(kubectl -n argo-cd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)`
+`export ARGOCDPW=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo)`
 
 # Login to Argo
 `argocd login --insecure --username admin --password $ARGOCDPW localhost:8081`
