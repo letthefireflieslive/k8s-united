@@ -38,7 +38,7 @@ spec:
           - name: container_image
             value: legnoban/test-app-sb1
           - name: container_tag
-            value: 1.0.2
+            value: 1.0.3
       - name: promote-dev
         templateRef:
           name: promote
@@ -59,6 +59,6 @@ spec:
             - name: image_name
               value: test-app-sb1
             - name: tag
-              value: 1.0.2
+              value: 1.0.3
         dependencies:
           - build
