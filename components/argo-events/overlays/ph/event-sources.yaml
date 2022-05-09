@@ -1,28 +1,14 @@
----
-
 apiVersion: argoproj.io/v1alpha1
 kind: EventSource
 metadata:
-  name: github
+  name: bitbucket
 spec:
   service:
     ports:
-    - port: 12000
-      targetPort: 12000
-  github:
-    argo-combined-app:
-      owner: vfarcic
-      repository: argo-combined-app
-      webhook:
-        endpoint: /argo-combined-app
-        port: "12000"
-        method: POST
-        url: http://webhook.127.0.0.1.nip.io
-      events:
-        - "*"
-      apiToken:
-        name: github-access
-        key: token
-      insecure: true
-      active: true
-      contentType: json
+      - port: 12000
+        targetPort: 12000
+  webhook:
+    sb1-code-change:
+      endpoint: /argo-events-bitbucket
+      port: "12000"
+      method: POST

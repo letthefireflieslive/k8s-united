@@ -1,85 +1,88 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
-  name: webhook
+  name: bitbucket
+  namespace: argo-events
 spec:
   template:
-    serviceAccountName: argo-events-sa
+    serviceAccountName: operate-workflow-sa
   dependencies:
-  - name: github
-    eventSourceName: github
-    eventName: argo-combined-app
+    - name: test-dep
+      eventSourceName: bitbucket
+      eventName: sb1-code-change
   triggers:
-  - template:
-      name: trigger
-      argoWorkflow:
-        group: argoproj.io
-        version: v1alpha1
-        resource: workflows
-        operation: submit
-        source:
-          resource:
-            apiVersion: argoproj.io/v1alpha1
-            kind: Workflow
-            metadata:
-              generateName: sb1-
-              namespace: workflows
-            spec:
-              entrypoint: build
-              serviceAccountName: workflow
-              volumes:
-              - name: regcred
-                secret:
-                  secretName: regcred
-                  items:
-                    - key: .dockerconfigjson
-                      path: config.json
-              - name: github-access
-                secret:
-                  secretName: github-access
-                  items:
-                    - key: token
-                      path: token
-              templates:
-              - name: build
-                dag:
-                  tasks:
-                  - name: build
-                    templateRef:
-                      name: container-image
-                      template: build-kaniko-git
-                      clusterScope: true
-                    arguments:
-                      parameters:
-                        - name: repo_url
-                          value: git://github.com/letthefireflieslive/test-app-sb1
-                        - name: repo_ref
-                          value: refs/heads/main
-                        - name: container_image
-                          value: legnoban/test-app-sb1
-                        - name: container_tag
-                          value: 1.0.3
-                  - name: promote-dev
-                    templateRef:
-                      name: promote
-                      template: promote
-                      clusterScope: true
-                    arguments:
-                      parameters:
-                        - name: repo_owner
-                          value: letthefireflieslive
-                        - name: repo_name
-                          value: vcs
-                        - name: repo_branch
-                          value: master
-                        - name: deployment_path
-                          value: overlays/eg/dev/sb1/deployment.yml
-                        - name: image_owner
-                          value: legnoban
-                        - name: image_name
-                          value: test-app-sb1
-                        - name: tag
-                          value: 1.0.3
-                    dependencies:
-                      - build
+    - template:
+        name: webhook-workflow-trigger
+        conditions: "test-dep"
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: pipe-sb1-
+              spec:
+                entrypoint: full
+                #                serviceAccountName: operate-workflow-sa
+                volumes:
+                  - name: kaniko-secret
+                    secret:
+                      secretName: regcred
+                      items:
+                        - key: .dockerconfigjson
+                          path: config.json
+                  - name: github-access
+                    secret:
+                      secretName: github-access
+                      items:
+                        - key: token
+                          path: token
+                templates:
+                  - name: full
+                    dag:
+                      tasks:
+                        - name: build
+                          templateRef:
+                            name: container-image
+                            template: build-kaniko-git
+                            clusterScope: true
+                          arguments:
+                            parameters:
+                              - name: repo_url
+                                value: git://github.com/letthefireflieslive/test-app-sb1
+                              - name: repo_ref
+                                value: refs/heads/main
+                              - name: container_image
+                                value: legnoban/test-app-sb1
+                              - name: container_tag
+                                value: 1.0.3
+                        - name: promote-dev
+                          templateRef:
+                            name: promote
+                            template: promote
+                            clusterScope: true
+                          arguments:
+                            parameters:
+                              - name: repo_owner
+                                value: letthefireflieslive
+                              - name: repo_name
+                                value: vcs
+                              - name: repo_branch
+                                value: master
+                              - name: deployment_path
+                                value: overlays/eg/dev/sb1/deployment.yml
+                              - name: image_owner
+                                value: legnoban
+                              - name: image_name
+                                value: test-app-sb1
+                              - name: tag
+                                value: 1.0.3
+                          dependencies:
+                            - build
+
+          parameters:
+            - src:
+                dependencyName: test-dep
+                dataKey: body
+              dest: spec.arguments.parameters.0.value

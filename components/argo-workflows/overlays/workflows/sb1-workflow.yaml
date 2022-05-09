@@ -1,0 +1,64 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: sb1-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+spec:
+  entrypoint: full
+  serviceAccountName: argo
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: regcred
+      items:
+        - key: .dockerconfigjson
+          path: config.json
+  - name: github-access
+    secret:
+      secretName: github-access
+      items:
+        - key: token
+          path: token
+  templates:
+  - name: full
+    dag:
+      tasks:
+      - name: build
+        templateRef:
+          name: container-image
+          template: build-kaniko-git
+          clusterScope: true
+        arguments:
+          parameters:
+          - name: repo_url
+            value: git://github.com/letthefireflieslive/test-app-sb1
+          - name: repo_ref
+            value: refs/heads/main
+          - name: container_image
+            value: legnoban/test-app-sb1
+          - name: container_tag
+            value: 1.0.2
+      - name: promote-dev
+        templateRef:
+          name: promote
+          template: promote
+          clusterScope: true
+        arguments:
+          parameters:
+            - name: repo_owner
+              value: letthefireflieslive
+            - name: repo_name
+              value: vcs
+            - name: repo_branch
+              value: master
+            - name: deployment_path
+              value: overlays/eg/dev/sb1/deployment.yml
+            - name: image_owner
+              value: legnoban
+            - name: image_name
+              value: test-app-sb1
+            - name: tag
+              value: 1.0.2
+        dependencies:
+          - build
