@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-infra-root
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argo-cd
+  project: cluster-infra
+  source:
+    repoURL: https://bitbucket.webbfontaine.com/scm/proto/k8s-united.git
+    path: ./ph/components
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+

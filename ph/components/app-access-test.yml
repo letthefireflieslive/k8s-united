@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-access-test
+  namespace: argo-cd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: cluster-tools
+
+  source:
+    repoURL: https://github.com/letthefireflieslive/k8s-ph.git
+    targetRevision: HEAD
+    path: ./manifest/app-access-test
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: smoke
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

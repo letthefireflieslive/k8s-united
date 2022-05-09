@@ -1,1 +1,4 @@
 /creds
+.idea/*
+*.iml
+*.yml-e

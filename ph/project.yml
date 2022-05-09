@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: cluster-infra
+  namespace: argo-cd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Cluster Tools Project
+  sourceRepos:
+    - '*'
+  destinations:
+  - server: https://kubernetes.default.svc
+    namespace: argo-cd
+  - server: https://kubernetes.default.svc
+    namespace: kube-system
+  - server: https://kubernetes.default.svc
+    namespace: argo-workflows
+  - server: https://kubernetes.default.svc
+    namespace: argo-workflows
+  - server: https://kubernetes.default.svc
+    namespace: argo-events
+  - server: https://kubernetes.default.svc
+    namespace: smoke
+  - server: https://kubernetes.default.svc
+    namespace: nfs
+  - server: https://kubernetes.default.svc
+    namespace: permission-manager
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
