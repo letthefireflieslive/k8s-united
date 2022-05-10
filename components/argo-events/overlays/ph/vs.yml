@@ -1,0 +1,19 @@
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: vs
+spec:
+  gateways:
+    - istio-system/cluster-ingressgateway
+  hosts:
+    - devops.wfgmb.com
+  http:
+    - match:
+        - uri:
+            prefix: /argo-events-bitbucket
+      route:
+        - destination:
+            host: bitbucket-eventsource-svc
+            port:
+              number: 12000
